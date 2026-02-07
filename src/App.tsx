@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import Auth from './contexts/Auth'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
+import AIWorkoutGenerator from './pages/AIWorkoutGenerator'
 import Dashboard from './pages/Dashboard'
 import Exercises from './pages/Exercises.tsx'
 
@@ -30,6 +31,7 @@ function AppContent() {
         <Route path="/exercises" element={<ProtectedRoute><Exercises /></ProtectedRoute>} />
         <Route path="/workouts" element={<ProtectedRoute><div className="p-8 text-center">Próximamente: Entrenamientos</div></ProtectedRoute>} />
         <Route path="/progress" element={<ProtectedRoute><div className="p-8 text-center">Próximamente: Progreso</div></ProtectedRoute>} />
+        <Route path="/ai-generator" element={<ProtectedRoute><AIWorkoutGenerator /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
