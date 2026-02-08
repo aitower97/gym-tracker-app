@@ -1,4 +1,4 @@
-import { Calendar, Dumbbell, Home, LogOut, Sparkles, TrendingUp } from 'lucide-react'
+import { Calendar, Dumbbell, Home, LogOut, Sparkles, TrendingUp, Users } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -19,7 +19,8 @@ export default function Navigation() {
     { path: '/exercises', icon: Dumbbell, label: 'Ejercicios' },
     { path: '/workouts', icon: Calendar, label: 'Entrenamientos' },
     { path: '/progress', icon: TrendingUp, label: 'Progreso' },
-    { path: '/ai-generator', icon: Sparkles, label: 'IA Generador' },
+    { path: '/ai-generator', icon: Sparkles, label: 'IA' },
+    { path: '/trainers', icon: Users, label: 'Entrenadores' },
   ]
 
   return (

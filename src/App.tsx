@@ -4,7 +4,12 @@ import Auth from './contexts/Auth'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import AIWorkoutGenerator from './pages/AIWorkoutGenerator'
 import Dashboard from './pages/Dashboard'
-import Exercises from './pages/Exercises.tsx'
+import Exercises from './pages/Exercises'
+import Progress from "./pages/Progress"
+import TrainerManagement from './pages/TrainerManagement'
+import WorkoutNew from "./pages/WorkoutNew"
+import WorkoutSession from "./pages/WorkoutSession"
+import Workouts from "./pages/Workouts"
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()
@@ -29,9 +34,12 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/exercises" element={<ProtectedRoute><Exercises /></ProtectedRoute>} />
-        <Route path="/workouts" element={<ProtectedRoute><div className="p-8 text-center">Próximamente: Entrenamientos</div></ProtectedRoute>} />
-        <Route path="/progress" element={<ProtectedRoute><div className="p-8 text-center">Próximamente: Progreso</div></ProtectedRoute>} />
+        <Route path="/workouts" element={<ProtectedRoute><Workouts /></ProtectedRoute>} />
+        <Route path="/workouts/new" element={<ProtectedRoute><WorkoutNew /></ProtectedRoute>} />
+        <Route path="/workouts/:id" element={<ProtectedRoute><WorkoutSession /></ProtectedRoute>} />
+        <Route path="/progress" element={<ProtectedRoute><Progress /></ProtectedRoute>} />
         <Route path="/ai-generator" element={<ProtectedRoute><AIWorkoutGenerator /></ProtectedRoute>} />
+        <Route path="/trainers" element={<ProtectedRoute><TrainerManagement /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>

@@ -15,21 +15,18 @@ interface Stats {
 
 interface RecentSession {
   id: string
-  date: string
+  started_at: string
   duration_minutes?: number
   mood?: string
-  workout_day?: {
-    name: string
-  }
 }
 
 export default function Dashboard() {
   const { user } = useAuth()
-  const [stats, setStats] = useState<Stats>({ 
-    totalSessions: 0, 
-    thisWeek: 0, 
+  const [stats, setStats] = useState<Stats>({
+    totalSessions: 0,
+    thisWeek: 0,
     thisMonth: 0,
-    totalExercises: 0 
+    totalExercises: 0
   })
   const [recentSessions, setRecentSessions] = useState<RecentSession[]>([])
   const [loading, setLoading] = useState(true)
@@ -40,45 +37,26 @@ export default function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      // Obtener sesiones
-      const { data: allSessions } = await supabase
-        .from('workout_sessions')
-        .select('date')
-
-      // Obtener sesiones recientes
-      const { data: sessions } = await supabase
-        .from('workout_sessions')
-        .select('*, workout_day:workout_days(name)')
-        .order('date', { ascending: false })
-        .limit(3)
-
-      setRecentSessions(sessions || [])
-
-      // Obtener ejercicios
+      // SOLO cargamos ejercicios para que la app no pete
       const { data: exercises } = await supabase
         .from('exercises')
         .select('id')
 
-      // Calcular estadísticas
-      const now = new Date()
-      const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()))
-      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-
-      const thisWeek = allSessions?.filter(s => new Date(s.date) >= startOfWeek).length || 0
-      const thisMonth = allSessions?.filter(s => new Date(s.date) >= startOfMonth).length || 0
-
       setStats({
-        totalSessions: allSessions?.length || 0,
-        thisWeek,
-        thisMonth,
+        totalSessions: 0,
+        thisWeek: 0,
+        thisMonth: 0,
         totalExercises: exercises?.length || 0
       })
+
+      setRecentSessions([])
     } catch (error) {
       console.error('Error:', error)
     } finally {
       setLoading(false)
     }
   }
+
 
   if (loading) {
     return (
@@ -138,7 +116,7 @@ export default function Dashboard() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <Link 
+          <Link
             to="/workouts/new"
             className="card hover:shadow-lg transition-shadow cursor-pointer bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200"
           >
@@ -157,7 +135,7 @@ export default function Dashboard() {
             </div>
           </Link>
 
-          <Link 
+          <Link
             to="/exercises"
             className="card hover:shadow-lg transition-shadow cursor-pointer bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200"
           >
@@ -183,7 +161,7 @@ export default function Dashboard() {
             <h3 className="text-xl font-bold text-gray-800">
               Actividad Reciente
             </h3>
-            <Link 
+            <Link
               to="/workouts"
               className="text-sm text-blue-600 hover:text-blue-700 font-medium"
             >
@@ -216,10 +194,10 @@ export default function Dashboard() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-800">
-                        {session.workout_day?.name || 'Entrenamiento libre'}
+                        Entrenamiento
                       </h4>
                       <p className="text-sm text-gray-600">
-                        {format(new Date(session.date), "d 'de' MMMM", { locale: es })}
+                        {format(new Date(session.started_at), "d 'de' MMMM", { locale: es })}
                       </p>
                     </div>
                   </div>
