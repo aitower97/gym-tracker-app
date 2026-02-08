@@ -6,6 +6,8 @@ import AIWorkoutGenerator from './pages/AIWorkoutGenerator'
 import Dashboard from './pages/Dashboard'
 import Exercises from './pages/Exercises'
 import Progress from "./pages/Progress"
+import StartWorkout from './pages/StartWorkout'
+import Templates from './pages/Templates'
 import TrainerManagement from './pages/TrainerManagement'
 import WorkoutNew from "./pages/WorkoutNew"
 import WorkoutSession from "./pages/WorkoutSession"
@@ -40,6 +42,8 @@ function AppContent() {
         <Route path="/progress" element={<ProtectedRoute><Progress /></ProtectedRoute>} />
         <Route path="/ai-generator" element={<ProtectedRoute><AIWorkoutGenerator /></ProtectedRoute>} />
         <Route path="/trainers" element={<ProtectedRoute><TrainerManagement /></ProtectedRoute>} />
+        <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />
+        <Route path="/workouts/start/:templateId" element={<ProtectedRoute><StartWorkout /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>

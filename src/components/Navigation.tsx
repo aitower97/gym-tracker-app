@@ -1,4 +1,4 @@
-import { Calendar, Dumbbell, Home, LogOut, Sparkles, TrendingUp, Users } from 'lucide-react'
+import { BookTemplate, Calendar, Dumbbell, Home, LogOut, Sparkles, TrendingUp, Users } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -21,6 +21,7 @@ export default function Navigation() {
     { path: '/progress', icon: TrendingUp, label: 'Progreso' },
     { path: '/ai-generator', icon: Sparkles, label: 'IA' },
     { path: '/trainers', icon: Users, label: 'Entrenadores' },
+    { path: '/templates', icon: BookTemplate, label: 'Plantillas' },
   ]
 
   return (
